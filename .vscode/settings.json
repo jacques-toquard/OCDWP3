@@ -1,3 +1,25 @@
 { 
-    "liveServer.settings.ignoreFiles": ["Backend/**"] 
+    "liveServer.settings.ignoreFiles": [
+        "Backend/**"
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#fefcea",
+        "activityBar.background": "#fefcea",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#09b7a5",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#fefcea",
+        "statusBar.background": "#fdf4b8",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#fcec86",
+        "statusBarItem.remoteBackground": "#fdf4b8",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#fdf4b8",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#fdf4b899",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.remoteColor": "#fdf4b8"
 }
