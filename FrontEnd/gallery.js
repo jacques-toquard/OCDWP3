@@ -116,3 +116,48 @@ if (allWorks !== null) {
 } else {
     console.error('allWorks is null')
 }
+
+/**
+ * Creates the filter buttons for the gallery
+ * 
+ * The function creates a button for each category and a "Tous" button.
+ * When a button is clicked, it becomes active and all other buttons become inactive.
+ * The function then renders the works matching the category of the active button.
+ * If the "Tous" button is clicked, all works are rendered.
+ */
+function createFilterButtons() {
+    const filtersDiv = document.querySelector('#filters')
+    const buttons = new Set() // Utilisation d'un Set au lieu d'un Array
+    
+    // Bouton "Tous"
+    const allButton = document.createElement('button')
+    allButton.innerText = 'Tous'
+    allButton.classList.add('active')
+    allButton.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'))
+        allButton.classList.add('active')
+        renderWorks(allWorks)
+    })
+    filtersDiv.appendChild(allButton)
+    buttons.add(allButton)
+    
+    // Boutons pour chaque catégorie
+    const categories = categoryLookup.getAllCategories()
+    for (const category of categories) {
+        const button = document.createElement('button')
+        button.innerText = category.name
+        button.addEventListener('click', () => {
+            buttons.forEach(btn => btn.classList.remove('active'))
+            button.classList.add('active')
+            const filteredWorks = allWorks.filter(work => 
+                work.categoryId === category.id
+            )
+            renderWorks(filteredWorks)
+        })
+        filtersDiv.appendChild(button)
+        buttons.add(button)
+    }
+}
+
+// Appeler cette fonction après avoir chargé les works et les catégories
+createFilterButtons()
