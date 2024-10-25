@@ -113,6 +113,7 @@ function renderWorks(works) {
 
 if (allWorks !== null) {
     renderWorks(allWorks)
+    console.log(allWorks)
 } else {
     console.error('allWorks is null')
 }
