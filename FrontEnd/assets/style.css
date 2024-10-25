@@ -221,7 +221,7 @@ nav li a {
 	text-decoration: none;
 }
 
-.login-form {
+#login-form {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -246,7 +246,7 @@ nav li a {
     padding: 0 20px;
 }
 
-.login-form button {
+#login-form button {
     background-color: #1D6154;
     color: white;
     font-family: 'Syne';
@@ -262,7 +262,7 @@ nav li a {
 	margin: 0 auto;
 }
 
-.login-form button:hover {
+#login-form button:hover {
     background-color: #0E2F28;
 }
 
