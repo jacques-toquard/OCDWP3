@@ -66,11 +66,17 @@ export async function getCategories() {
 }
 
 /**
- * Logs in a user and returns a JSON Web Token
- * @param {string} email The user's email
- * @param {string} password The user's password
- * @returns {Promise<{token: string}>} The JSON Web Token
- * @throws {Error} If the API request fails
+ * @typedef {Object} LoginResponse
+ * @property {string} [token] - The authentication token if login successful
+ * @property {string} [error] - Error message if login failed
+ */
+
+/**
+ * Attempts to log in a user
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<LoginResponse>}
+ * @throws {Error} if the network request fails
  */
 export async function fetchApiPOSTLogin(email, password) {
     const route = "/users/login";
@@ -80,18 +86,17 @@ export async function fetchApiPOSTLogin(email, password) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
+            body: JSON.stringify({ email, password }),
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
+            return { error: "Erreur dans l'identifiant ou le mot de passe" };
         }
-        return await response.json();
+
+        const data = await response.json();
+        return { token: data.token };
     } catch (error) {
-        console.error(`API error while fetching ${route}:`, error);
-        throw error;
+        console.error("Login request failed:", error);
+        throw new Error("Erreur de connexion au serveur");
     }
 }

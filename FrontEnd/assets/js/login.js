@@ -2,37 +2,40 @@ import { fetchApiPOSTLogin } from "./api.js";
 
 const loginForm = document.getElementById("login-form");
 
+/**
+ * Shows an error message in the form
+ * @param {string} message - The error message to display
+ */
 function showError(message) {
-    const existingError = document.querySelector(".error-message");
-    if (existingError) {
-        existingError.remove();
-    }
-    const errorDiv = document.createElement("div");
-    errorDiv.className = "error-message";
-    errorDiv.style.color = "red";
-    errorDiv.style.marginTop = "10px";
-    errorDiv.style.textAlign = "center";
+    const errorDiv =
+        document.getElementById("error-message") ??
+        document.createElement("div");
+
+    errorDiv.id = "error-message";
     errorDiv.textContent = message;
-    loginForm.appendChild(errorDiv);
+
+    if (!errorDiv.parentNode) {
+        loginForm.appendChild(errorDiv);
+    }
 }
 
+/**
+ * Handles the login form submission
+ * @param {Event} event - The form submission event
+ */
 loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-
-    // Récupération des valeurs du formulaire
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
-
     try {
-        const data = await fetchApiPOSTLogin(email, password);
-
-        if (data.token && response.ok) {
-            localStorage.setItem("token", data.token);
+        const email = document.querySelector("#email").value;
+        const password = document.querySelector("#password").value;
+        const response = await fetchApiPOSTLogin(email, password);
+        if (response.token) {
+            localStorage.setItem("token", response.token);
             window.location.href = "index.html";
-        } else if (!data.token || !response.ok) {
-            showError("Erreur dans l'identifiant ou le mot de passe");
+        } else if (response.error) {
+            showError(response.error);
         }
     } catch (error) {
-        console.error("Erreur lors de la connexion:", error);
+        showError(error.message);
     }
 });
