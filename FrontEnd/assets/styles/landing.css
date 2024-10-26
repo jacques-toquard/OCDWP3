@@ -101,3 +101,17 @@
     border: none;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+.centered-h2 button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+#btnModifierInner {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}

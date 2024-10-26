@@ -197,7 +197,10 @@ footer nav ul {
 }
 
 .centered-h2 {
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
     margin-bottom: 1em;
 }
 
