@@ -29,11 +29,13 @@ loginForm.addEventListener("submit", async (event) => {
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
         const response = await fetchApiPOSTLogin(email, password);
-        if (response.token) {
+        if (response.token && !response.error) {
             localStorage.setItem("token", response.token);
             window.location.href = "index.html";
         } else if (response.error) {
             showError(response.error);
+        } else {
+            showError("Erreur inconue");
         }
     } catch (error) {
         showError(error.message);
