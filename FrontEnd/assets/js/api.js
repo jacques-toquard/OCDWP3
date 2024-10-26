@@ -1,7 +1,7 @@
 /**
  * Validates and gets the API URL from config
- * @returns {string}
- * @throws {Error} if apiUrl is not properly configured
+ * @returns {string} The API URL
+ * @throws {Error} If apiUrl is not properly configured
  */
 function getApiUrl() {
     if (!window.config?.apiUrl || typeof window.config.apiUrl !== "string") {
@@ -17,6 +17,7 @@ function getApiUrl() {
  * @template T The expected return type
  * @param {string} route The API route to fetch from
  * @returns {Promise<T>} The parsed JSON response
+ * @throws {Error} If the API request fails
  */
 async function fetchApi(route) {
     const apiUrl = getApiUrl();
@@ -42,7 +43,8 @@ async function fetchApi(route) {
 
 /**
  * Fetches all works from the API
- * @returns {Promise<Work[]>}
+ * @returns {Promise<Work[]>} The list of works
+ * @throws {Error} If the API request fails
  */
 export async function getWorks() {
     return fetchApi("/works");
@@ -56,8 +58,9 @@ export async function getWorks() {
 
 /**
  * Fetches categories from the API
- * @returns {Promise<Category[]>}
+ * @returns {Promise<Category[]>} The list of categories
+ * @throws {Error} If the API request fails
  */
-export async function queryCategories() {
+export async function getCategories() {
     return fetchApi("/categories");
 }
