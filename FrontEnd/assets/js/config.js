@@ -7,12 +7,12 @@ const config = {
      * The URL of the API
      * @type {string}
      */
-    apiUrl: 'http://localhost:5678/api',
+    apiUrl: "http://localhost:5678/api",
     /**
      * Gets the token from the local storage
      * @returns {string} The token
      */
-    getToken: () => localStorage.getItem('token')
+    getToken: () => localStorage.getItem("token"),
 };
 
 /**

@@ -16,6 +16,7 @@
 #introduction article {
     flex: 1;
 }
+
 #introduction h2 {
     margin-bottom: 1em;
 }
@@ -33,23 +34,23 @@
 
 #filters button {
     border-radius: 60px;
-    border: 1px solid #1D6154;
+    border: 1px solid #1d6154;
     font-family: Sora, sans-serif;
     font-size: 16px;
     padding: 9px 20px;
-    color: #1D6154;
+    color: #1d6154;
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 #filters button:hover {
-    background-color: #1D6154;
+    background-color: #1d6154;
     color: white;
 }
 
 #filters button.active {
-    background-color: #1D6154;
+    background-color: #1d6154;
     color: white;
 }
 

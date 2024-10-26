@@ -11,7 +11,7 @@ const auth = {
     /**
      * Logs the user out
      */
-    logout: () => localStorage.removeItem('token')
+    logout: () => localStorage.removeItem("token"),
 };
 
 /**
