@@ -116,7 +116,7 @@
     gap: 0.5rem;
 }
 
-.modal {
+#modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -129,7 +129,7 @@
     z-index: 1000;
 }
 
-.modal-wrapper {
+#modal-wrapper {
     background: white;
     border-radius: 10px;
     padding: 2rem;
@@ -138,14 +138,14 @@
     position: relative;
 }
 
-.modal-wrapper h2 {
+#modal-title {
     text-align: center;
     font-family: "Work Sans", sans-serif;
     color: black;
     font-weight: 400;
 }
 
-.modal-close {
+#modal-close {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
@@ -155,7 +155,7 @@
     cursor: pointer;
 }
 
-.modal-gallery {
+#modal-gallery {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
