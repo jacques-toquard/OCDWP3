@@ -100,3 +100,27 @@ export async function fetchApiPOSTLogin(email, password) {
         throw new Error("Erreur de connexion au serveur");
     }
 }
+
+/**
+ * Deletes a work by ID
+ * @param {number} id - The ID of the work to delete
+ * @returns {Promise<void>} - Resolves if the deletion is successful
+ * @throws {Error} - If the network request fails
+ */
+export async function fetchApiDELETEWork(id) {
+    const route = `/works/${id}`;
+    try {
+        const response = await fetch(`${getApiUrl()}${route}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+    } catch (error) {
+        console.error(`API error while deleting work ${id}:`, error);
+        throw error;
+    }
+}
