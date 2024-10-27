@@ -67,75 +67,111 @@ class Work {
     }
 }
 
-var allWorks = (await getWorks()).map(
-    (work) => new Work(work.id, work.imageUrl, work.title, work.categoryId)
-);
-
 /**
- * Displays all the works in the #gallery element
- * @param {Array<Work>} [works=allWorks] The array of works to display
+ * Displays works in the gallery
+ * @param {Array<Work>} works The array of works to display
  */
-function displayWorks(works = allWorks) {
+function displayWorks(works) {
     const gallery = document.getElementById("gallery");
-    gallery.innerHTML = ""; // reset the gallery
+    gallery.innerHTML = "";
     works.forEach((work) => {
         if (work) {
             gallery.appendChild(work.figure);
         } else {
-            console.error("Failed to create figure for work:", work.title);
+            console.error("Failed to create figure for work:", work);
         }
     });
 }
 
-/**
- * Affiche les travaux avec le filtre "Tous"
- */
-if (allWorks) {
-    displayWorks();
-} else {
-    console.error("There are no works !"); //TODO: test si ca s'affiche bien avec une db vide
-}
+// Initialize works
+const initialWorks = await getWorks();
+export const gallery = {
+    works: initialWorks.map(
+        (work) => new Work(work.id, work.imageUrl, work.title, work.categoryId)
+    ),
 
+    /**
+     * Adds a new work and updates the display
+     * @param {{id: number, imageUrl: string, title: string, categoryId: number}} workData 
+     */
+    addWork(workData) {
+        const newWork = new Work(
+            workData.id,
+            workData.imageUrl,
+            workData.title,
+            workData.categoryId
+        );
+        this.works.push(newWork);
+        this.render();
+    },
+
+    /**
+     * Removes a work by ID and updates the display
+     * @param {number} workId 
+     * @returns {boolean} Whether the work was found and removed
+     */
+    removeWork(workId) {
+        const index = this.works.findIndex(work => work.id === workId);
+        if (index === -1) return false;
+        
+        this.works.splice(index, 1);
+        this.render();
+        return true;
+    },
+
+    /**
+     * Re-renders the current state of works based on active filter
+     */
+    render() {
+        const activeFilter = document.querySelector("#filters button.active");
+        if (!activeFilter) {
+            displayWorks(this.works);
+            return;
+        }
+
+        if (activeFilter.innerText === "Tous") {
+            displayWorks(this.works);
+        } else {
+            const category = categoryLookup.getAllCategories()
+                .find(cat => cat.name === activeFilter.innerText);
+            if (category) {
+                const filteredWorks = this.works.filter(
+                    work => work.categoryId === category.id
+                );
+                displayWorks(filteredWorks);
+            }
+        }
+    }
+};
+
+// Initialize filters
 const filtersDiv = document.querySelector("#filters");
 
-/**
- * Retourne tous les boutons de filtre
- * @returns {NodeListOf<HTMLButtonElement>}
- */
-function getFilterButtons() {
-    return document.querySelectorAll("#filters button");
-}
-
-// Bouton "Tous"
+// Add "Tous" button
 const boutonTous = document.createElement("button");
 boutonTous.innerText = "Tous";
 boutonTous.classList.add("active");
 boutonTous.addEventListener("click", (event) => {
-    getFilterButtons().forEach((btn) => btn.classList.remove("active"));
+    document.querySelectorAll("#filters button")
+        .forEach((btn) => btn.classList.remove("active"));
     boutonTous.classList.add("active");
-    displayWorks();
+    gallery.render();
 });
 filtersDiv.appendChild(boutonTous);
 
-// Boutons pour chaque catégorie
-const categoriesSet = new Set(
-    categoryLookup.getAllCategories().map((cat) => cat.name)
-);
-if (categoriesSet.size !== categoryLookup.getAllCategories().length) {
-    console.error("Il y a des doublons dans les catégories");
-}
-//* Je trouve que l'utilisation de Set pour éviter les doublons n'est pas utile si les titres sont `unique` dans la base de données.
+// Add category buttons
 const categories = categoryLookup.getAllCategories();
 for (const category of categories) {
     const button = document.createElement("button");
     button.innerText = category.name;
     button.addEventListener("click", (event) => {
-        getFilterButtons().forEach((btn) => btn.classList.remove("active"));
+        document.querySelectorAll("#filters button")
+            .forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
-        const filteredWorks = allWorks.filter(
-            (work) => work.categoryId === category.id
-        );
-        displayWorks(filteredWorks);
+        gallery.render();
     });
     filtersDiv.appendChild(button);
 }
+
+// Initial render
+gallery.render();
