@@ -138,6 +138,13 @@
     position: relative;
 }
 
+.modal-wrapper h2 {
+    text-align: center;
+    font-family: "Work Sans", sans-serif;
+    color: black;
+    font-weight: 400;
+}
+
 .modal-close {
     position: absolute;
     top: 10px;
