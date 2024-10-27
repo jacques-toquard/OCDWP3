@@ -115,4 +115,3 @@ if (window.auth.isLoggedIn()) {
 
     modal.init();
 }
-
