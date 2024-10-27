@@ -132,7 +132,7 @@
 .modal-wrapper {
     background: white;
     border-radius: 10px;
-    padding: 30px;
+    padding: 2rem;
     width: 90%;
     max-width: 630px;
     position: relative;
@@ -147,8 +147,8 @@
 
 .modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0.5rem;
+    right: 0.5rem;
     border: none;
     background: none;
     font-size: 24px;
@@ -158,6 +158,6 @@
 .modal-gallery {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin: 20px 0;
+    gap: 0.5rem;
+    margin: 1rem 0;
 }
