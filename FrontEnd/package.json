@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "main": "src/index.js",
   "scripts": {
     "dev": "http-server . -p 5500",
     "docs": "jsdoc -c jsdoc.json",
