@@ -117,6 +117,17 @@
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#edit-banner {
+    display: none;
+    background-color: #000;
+    color: #fff;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    min-height: 60px;
+}
+
 #modal {
     display: none;
 }
