@@ -23,7 +23,6 @@ class Modal {
         galleryService.renderModalGallery();
     }
 
-
     /**
      * Shows the modal.
      */
