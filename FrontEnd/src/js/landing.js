@@ -1,21 +1,28 @@
 import { categoryLookup } from "./category-service.js";
 import { galleryService } from "./gallery-service.js";
 
-// const galleryDiv = document.getElementById("gallery");
 const filtersDiv = document.getElementById("filters");
 
-const categoryNames = ["Tous", ...categoryLookup.getAllCategories().map((cat) => cat.name)];
-
-
-categoryNames.forEach((catName) => {
-    const button = document.createElement("button");
-    button.innerText = catName;
-    button.addEventListener("click", (event) => {
-        //TODO: portfolio.filterByCategory(catName);
-        document.querySelectorAll("#filters button").forEach((button) => {
-            button.classList.remove("active");            
-        })
-        button.classList.add("active");
+function createCategoryButtons() {
+    const categories = [{ id: "all", name: "Tous" }, ...categoryLookup.getAllCategories()];
+    
+    categories.forEach(category => {
+        const button = document.createElement("button");
+        button.textContent = category.name;
+        button.dataset.categoryId = category.id;
+        button.addEventListener("click", handleCategoryFilter);
+        filtersDiv.appendChild(button);
     });
-    filtersDiv.appendChild(button);
-})
+}
+
+function handleCategoryFilter(event) {
+    const selectedCategoryId = event.target.dataset.categoryId;
+    
+    document.querySelectorAll("#filters button").forEach(button => {
+        button.classList.toggle("active", button === event.target);
+    });
+
+    galleryService.filterByCategory(selectedCategoryId);
+}
+
+createCategoryButtons();

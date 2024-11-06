@@ -78,7 +78,25 @@ class AllWorks {
      * @private
      */
     constructor() {
-        this.works = AllWorks.fetchWorks();
+        this.works = [];
+        this.filter = "all";
+    }
+
+    renderPortfolio() {
+        const portfolioElement = document.getElementById("gallery");
+        portfolioElement.innerHTML = "";
+        this.works
+            .filter(
+                (work) => this.filter === "all" || work.categoryId === parseInt(this.filter)
+            )
+            .forEach((work) => {
+                portfolioElement.appendChild(work.figure);
+            });
+    }
+
+    filterByCategory(categoryId) {
+        this.filter = categoryId;
+        this.renderPortfolio();
     }
 
     /**
@@ -94,7 +112,7 @@ class AllWorks {
             console.error(`Error fetching works: ${error}`);
             works = [];
         }
-        return works;
+        return works.map((workData) => new Work(workData.id, workData.imageUrl, workData.title, workData.categoryId, workData.userId));
     }
 
     /**
@@ -186,3 +204,4 @@ class AllWorks {
 }
 
 export const galleryService = AllWorks.getInstance();
+galleryService.works = await AllWorks.fetchWorks();
