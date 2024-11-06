@@ -28,6 +28,15 @@ class Work {
         this.categoryId = categoryId;
         this.category = categoryLookup.getNameById(categoryId);
         this.figure = Work.createFigure(imageUrl, title);
+        this.modalFigure = Work.createModalFigure(imageUrl, id);
+    }
+
+    static createModalFigure(imageSource, id) {//TODO
+        const figure = document.createElement("figure");
+        const image = document.createElement("img");
+        image.src = imageSource;
+        figure.appendChild(image);
+        return figure;
     }
 
     /**
@@ -82,6 +91,15 @@ class AllWorks {
         this.filter = "all";
     }
 
+    renderModalGallery() {
+        const modalGallery = document.getElementById("modal-gallery");
+        modalGallery.innerHTML = "";
+        this.works.forEach((work) => {
+            console.log(work);
+            modalGallery.appendChild(work.modalFigure);
+        });
+    }
+
     /**
      * Renders the portfolio by filtering the works according to the current filter
      * and appends the figures of the filtered works to the element with the id "gallery".
@@ -93,7 +111,9 @@ class AllWorks {
         portfolioElement.innerHTML = "";
         this.works
             .filter(
-                (work) => this.filter === "all" || work.categoryId === parseInt(this.filter)
+                (work) =>
+                    this.filter === "all" ||
+                    work.categoryId === parseInt(this.filter)
             )
             .forEach((work) => {
                 portfolioElement.appendChild(work.figure);
@@ -122,7 +142,16 @@ class AllWorks {
             console.error(`Error fetching works: ${error}`);
             works = [];
         }
-        return works.map((workData) => new Work(workData.id, workData.imageUrl, workData.title, workData.categoryId, workData.userId));
+        return works.map(
+            (workData) =>
+                new Work(
+                    workData.id,
+                    workData.imageUrl,
+                    workData.title,
+                    workData.categoryId,
+                    workData.userId
+                )
+        );
     }
 
     /**

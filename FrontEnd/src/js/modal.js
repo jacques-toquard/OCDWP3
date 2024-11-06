@@ -15,12 +15,12 @@ class Modal {
         modalClose.addEventListener("click", (event) => {
             this.close();
         });
-
         this.modalElement.addEventListener("click", (event) => {
             if (event.target === this.modalElement) {
                 this.close();
             }
         });
+        galleryService.renderModalGallery();
     }
 
 
