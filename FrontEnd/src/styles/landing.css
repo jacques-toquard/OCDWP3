@@ -241,6 +241,20 @@
     background-color: #0e2f28;
 }
 
+#image-wrapper-add-mode {
+    background-color: #E8F1F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem;
+}
+
+#image-wrapper-preview-mode {
+    display: none;
+}
+
 #modal-valider {
     display:none;
     background-color: #A7A7A7;
