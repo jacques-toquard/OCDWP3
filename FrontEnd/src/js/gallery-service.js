@@ -1,5 +1,6 @@
 import { fetchApi } from "./api-service.js";
 import { categoryLookup } from "./category-service.js";
+import { auth } from "./auth-service.js";
 
 /**
  * Represents a work
@@ -96,26 +97,46 @@ class AllWorks {
         return works;
     }
 
-    
     /**
      * Adds a work to the list of works.
-     * @param {Object} workData - The data of the work to add. Must contain the following properties:
-     *   - id: The ID of the work.
-     *   - imageUrl: The URL of the image of the work.
-     *   - title: The title of the work.
-     *   - categoryId: The ID of the category of the work.
-     *   - userId: The ID of the user who created the work.
-     * @returns {Object} An object with the following properties:
-     *   - success: A boolean indicating if the work was added successfully.
-     *   - error: An error message if there was an error adding the work.
+     * @param {Object} workData An object with the following properties:
+     *                          - id: The ID of the work.
+     *                          - imageUrl: The URL of the image of the work.
+     *                          - title: The title of the work.
+     *                          - categoryId: The ID of the category of the work.
+     * @returns {Promise<Object>} A Promise that resolves with an object with the following properties:
+     *                            - success: A boolean indicating whether the work was added successfully.
+     *                            - error: The error message if the work was not added successfully.
      */
-    addWork(workData) {
+    async addWork(workData) {
         try {
-            const work = new Work(workData.id, workData.imageUrl, workData.title, workData.categoryId, workData.userId);
+            if (!!auth.isLoggedIn() === false) {
+                throw new Error("Not logged in");
+            }
+            const work = new Work(
+                workData.id,
+                workData.imageUrl,
+                workData.title,
+                workData.categoryId,
+                auth.getUserID()
+            );
             if (this.works.some((w) => w.id === work.id)) {
                 throw new Error("Work already exists");
             }
             this.works.push(work);
+            const workDataWithUserId = {
+                ...workData,
+                userId: auth.getUserID(),
+            };
+            await fetchApi(
+                "/works",
+                "POST",
+                {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth.getToken()}`,
+                },
+                JSON.stringify(workDataWithUserId)
+            );
             return {
                 success: true,
                 error: null,
@@ -130,19 +151,26 @@ class AllWorks {
     }
 
     /**
- * Deletes a work from the list of works.
- * @param {number} workId The ID of the work to delete.
- * @returns {Object} An object with the following properties:
- *   - success: A boolean indicating if the work was deleted successfully.
- *   - error: An error message if there was an error deleting the work.
- */
-    deleteWork(workId) {
+     * Deletes a work from the gallery
+     * @param {number} workId The ID of the work to delete
+     * @returns {Promise<{success: boolean, error: string?}>}
+     * @throws {Error} If not logged in
+     * @throws {Error} If the work is not found
+     */
+    async deleteWork(workId) {
         try {
+            if (!!auth.isLoggedIn() === false) {
+                throw new Error("Not logged in");
+            }
             const index = this.works.findIndex((w) => w.id === workId);
             if (index === -1) {
                 throw new Error("Work not found");
             }
             this.works.splice(index, 1);
+            await fetchApi(`/works/${workId}`, "DELETE", {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth.getToken()}`,
+            });
             return {
                 success: true,
                 error: null,
