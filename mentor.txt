@@ -1,0 +1,1 @@
+demander a propos de mes try-catch, et des errors as value
