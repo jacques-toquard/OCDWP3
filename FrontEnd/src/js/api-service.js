@@ -38,9 +38,7 @@ export async function fetchApi(route, method = "GET", headers = null, body = nul
             const data = await response.json();
             return data;
         } catch (jsonError) {
-            throw new Error(
-                `Failed to parse JSON response: ${jsonError.message}`
-            );
+            return null;
         }
     } catch (error) {
         console.error(`Error while fetching ${apiUrl + route}: ${error}`);
