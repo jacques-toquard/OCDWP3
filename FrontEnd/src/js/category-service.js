@@ -1,5 +1,10 @@
 import { fetchApi } from "./api-service.js";
-
+/**
+ * Creates an object that provides a mapping between category IDs and names.
+ * If the API call fails, an empty array will be used, and the mapping will return
+ * "Sans catégorie" for any ID.
+ * @returns {{getNameById: (id: number) => string, getAllCategories: () => {id: number; name: string}[]}}
+ */
 async function createCategoryLookup() {
     let categories;
     try {
@@ -15,4 +20,4 @@ async function createCategoryLookup() {
     };
 }
 
-export let categoryLookup = createCategoryLookup();
+export let categoryLookup = await createCategoryLookup();
