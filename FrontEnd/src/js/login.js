@@ -5,12 +5,19 @@ console.log(auth.isLoggedIn());
 
 const loginForm = document.getElementById("login-form");
 
+/**
+ * Shows the error message element with the given message.
+ * @param {string} message The message to display in the error element.
+ */
 function showError(message) {
     const errorElement = document.getElementById("error-message");
     errorElement.textContent = message;
     errorElement.style.display = "block";
 }
 
+/**
+ * Hides the error message element.
+ */
 function hideError() {
     const errorElement = document.getElementById("error-message");
     errorElement.style.display = "none";
