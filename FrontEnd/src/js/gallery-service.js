@@ -82,6 +82,12 @@ class AllWorks {
         this.filter = "all";
     }
 
+    /**
+     * Renders the portfolio by filtering the works according to the current filter
+     * and appends the figures of the filtered works to the element with the id "gallery".
+     * If the filter is "all", all works are rendered.
+     * If the filter is a category ID, only the works of that category are rendered.
+     */
     renderPortfolio() {
         const portfolioElement = document.getElementById("gallery");
         portfolioElement.innerHTML = "";
@@ -94,6 +100,10 @@ class AllWorks {
             });
     }
 
+    /**
+     * Filters the works by category ID and renders the portfolio.
+     * @param {number} categoryId The ID of the category to filter by.
+     */
     filterByCategory(categoryId) {
         this.filter = categoryId;
         this.renderPortfolio();

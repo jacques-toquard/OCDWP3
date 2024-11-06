@@ -1,28 +1,17 @@
-import { categoryLookup } from "./category-service.js";
 import { galleryService } from "./gallery-service.js";
+import { auth } from "./auth-service.js";
+import { createCategoryButtons } from "./filter-buttons.js";
+// import { modal } from "./modal.js";
 
-const filtersDiv = document.getElementById("filters");
-
-function createCategoryButtons() {
-    const categories = [{ id: "all", name: "Tous" }, ...categoryLookup.getAllCategories()];
-    
-    categories.forEach(category => {
-        const button = document.createElement("button");
-        button.textContent = category.name;
-        button.dataset.categoryId = category.id;
-        button.addEventListener("click", handleCategoryFilter);
-        filtersDiv.appendChild(button);
-    });
-}
-
-function handleCategoryFilter(event) {
-    const selectedCategoryId = event.target.dataset.categoryId;
-    
-    document.querySelectorAll("#filters button").forEach(button => {
-        button.classList.toggle("active", button === event.target);
-    });
-
-    galleryService.filterByCategory(selectedCategoryId);
+if (auth.isLoggedIn()) {
+    const editBanner = document.getElementById("edit-banner");
+    editBanner.style.display = "flex";
+    const editButton = document.getElementById("edit-button");
+    editButton.style.display = "flex";
+    editButton.addEventListener("click", (event) => {
+        // modal.open();
+    })
 }
 
 createCategoryButtons();
+galleryService.renderPortfolio();
