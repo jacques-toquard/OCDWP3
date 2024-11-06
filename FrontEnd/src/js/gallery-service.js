@@ -35,29 +35,23 @@ class Work {
         const figure = document.createElement("figure");
         figure.dataset.workId = id;
         figure.style.position = "relative";
-    
+
         const image = document.createElement("img");
         image.src = imageSource;
         figure.appendChild(image);
-    
+
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("delete-work");
         deleteButton.style.position = "absolute";
         deleteButton.style.top = "10px";
         deleteButton.style.right = "10px";
-        deleteButton.style.backgroundColor = "black";
-        deleteButton.style.borderRadius = "20%";
-        // deleteButton.style.padding = "5px";
-        deleteButton.style.height = "20px";
-        deleteButton.style.width = "20px";
-        deleteButton.style.border = "none";
         deleteButton.innerHTML = `
             <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.71607 0.35558C2.82455 0.136607 3.04754 0 3.29063 0H5.70938C5.95246 0 6.17545 0.136607 6.28393 0.35558L6.42857 0.642857H8.35714C8.71272 0.642857 9 0.930134 9 1.28571C9 1.64129 8.71272 1.92857 8.35714 1.92857H0.642857C0.287277 1.92857 0 1.64129 0 1.28571C0 0.930134 0.287277 0.642857 0.642857 0.642857H2.57143L2.71607 0.35558ZM0.642857 2.57143H8.35714V9.64286C8.35714 10.3929 7.75 11 7 11H2C1.25 11 0.642857 10.3929 0.642857 9.64286V2.57143ZM2.57143 3.85714C2.39464 3.85714 2.25 4.00179 2.25 4.17857V9.39286C2.25 9.56964 2.39464 9.71429 2.57143 9.71429C2.74821 9.71429 2.89286 9.56964 2.89286 9.39286V4.17857C2.89286 4.00179 2.74821 3.85714 2.57143 3.85714ZM4.5 3.85714C4.32321 3.85714 4.17857 4.00179 4.17857 4.17857V9.39286C4.17857 9.56964 4.32321 9.71429 4.5 9.71429C4.67679 9.71429 4.82143 9.56964 4.82143 9.39286V4.17857C4.82143 4.00179 4.67679 3.85714 4.5 3.85714ZM6.42857 3.85714C6.25179 3.85714 6.10714 4.00179 6.10714 4.17857V9.39286C6.10714 9.56964 6.25179 9.71429 6.42857 9.71429C6.60536 9.71429 6.75 9.56964 6.75 9.39286V4.17857C6.75 4.00179 6.60536 3.85714 6.42857 3.85714Z" fill="white"/>
             </svg>
         `;
         figure.appendChild(deleteButton);
-    
+
         return figure;
     }
 
@@ -117,8 +111,23 @@ class AllWorks {
         const modalGallery = document.getElementById("modal-gallery");
         modalGallery.innerHTML = "";
         this.works.forEach((work) => {
-            console.log(work);
-            modalGallery.appendChild(work.modalFigure);
+            const figure = work.modalFigure;
+            const deleteButton = figure.querySelector(".delete-work");
+            deleteButton.addEventListener("click", async (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                if (confirm("Are you sure you want to delete this work?")) {
+                    const workId = figure.dataset.workId;
+                    const result = await this.deleteWork(parseInt(workId));
+                    if (result.success) {
+                        figure.remove();
+                        this.renderPortfolio();
+                    } else {
+                        alert("Failed to delete the work. Please try again.");
+                    }
+                }
+            });
+            modalGallery.appendChild(figure);
         });
     }
 
