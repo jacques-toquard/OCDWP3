@@ -1,4 +1,4 @@
-import { fetchApi } from "./api-service";
+import { fetchApi } from "./api-service.js";
 
 async function createCategoryLookup() {
     let categories;

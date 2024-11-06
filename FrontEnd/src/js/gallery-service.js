@@ -1,5 +1,5 @@
-import { fetchApi } from "./api-service";
-import { categoryLookup } from "./category-service";
+import { fetchApi } from "./api-service.js";
+import { categoryLookup } from "./category-service.js";
 
 /**
  * Represents a work
