@@ -3,11 +3,13 @@
  * @namespace auth
  */
 export const auth = {
+
     /**
-     * Sets the user token
+     * Logs the user in
+     * @param {string} userID The user ID
      * @param {string} token The user token
      */
-    login: (token) => localStorage.setItem("token", token),
+    login: (userID, token) => {localStorage.setItem("userID", userID), localStorage.setItem("token", token)},
 
     /**
      * Checks if the user is logged in
@@ -22,7 +24,13 @@ export const auth = {
     getToken: () => localStorage.getItem("token"),
 
     /**
+     * Gets the user ID
+     * @returns {string} The user ID
+     */
+    getUserID: () => localStorage.getItem("userID"),
+
+    /**
      * Logs the user out
      */
-    logout: () => localStorage.removeItem("token"),
+    logout: () => {localStorage.removeItem("token"), localStorage.removeItem("userID")},
 };
