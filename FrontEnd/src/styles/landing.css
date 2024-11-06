@@ -151,10 +151,13 @@
 #modal-wrapper {
     background: white;
     border-radius: 10px;
-    padding: 2rem;
+    padding: 8rem;
     width: 90%;
-    max-width: 630px;
+    max-width: 800px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 #modal-title {
@@ -179,6 +182,12 @@
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 0.5rem;
     margin: 1rem 0;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid #b3b3b3;
+}
+
+#modal-gallery figure {
+    margin: 1rem auto;
 }
 
 #modal-gallery img {
@@ -197,4 +206,24 @@
 
 .delete-work:hover {
     background-color: #333;
+}
+
+#modal-add-photo {
+    background-color: #1d6154;
+    color: white;
+    font-family: "Syne";
+    font-weight: 700;
+    font-size: 14px;
+    height: 36px;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    padding: 0 30px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+#modal-add-photo:hover {
+    background-color: #0e2f28;
 }
