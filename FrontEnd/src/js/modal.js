@@ -21,6 +21,10 @@ class Modal {
         this.modalTitle = document.getElementById("modal-title");
         this.modalGallery = document.getElementById("modal-gallery");
         this.modalWorkModeDiv = document.getElementById("modal-work-mode");
+        this.modalWorkModeReturn = document.getElementById("modal-work-mode-return");
+        this.modalWorkModeReturn.addEventListener("click", (event) => {
+            this.addWorkModeClose();
+        })
         this.modalWorkModeValider = document.getElementById("modal-valider");//TODO add event listener
     }
 

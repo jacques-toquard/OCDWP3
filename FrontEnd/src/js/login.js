@@ -1,7 +1,7 @@
 import { fetchApi } from "./api-service.js";
 import { auth } from "./auth-service.js";
 
-console.log(auth.isLoggedIn());
+// console.log(auth.isLoggedIn());
 
 const loginForm = document.getElementById("login-form");
 
