@@ -228,6 +228,7 @@
     cursor: pointer;
     background-color: transparent;
     font-size: 30px;
+    font-weight: bold;
 }
 
 #modal-add-photo {
@@ -280,4 +281,22 @@
     width: 60%;
     margin: 0 auto;
     cursor: not-allowed;
+}
+
+#image-wrapper-add-mode-upload-image-constraints {
+    color: #444444;
+    font-size: 12px;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+#image-wrapper-add-mode-add-photo {
+    background-color: #CBD6DC;
+    color: #306685;
+    border-radius: 60px;
+    padding: 1rem 4rem;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
 }
