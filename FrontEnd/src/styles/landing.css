@@ -300,3 +300,15 @@
     border: none;
     cursor: pointer;
 }
+
+.modal-work-mode-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.modal-work-mode-inputs label {
+    color: #3D3D3D;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
