@@ -1,0 +1,5 @@
+{
+  "root": "src/",
+  "open": "index.html",
+  "browser": "chromium"
+}
