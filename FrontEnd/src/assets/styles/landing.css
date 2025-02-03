@@ -1,0 +1,30 @@
+#editBanner {
+  display: none;
+  background-color: black;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 60px;
+}
+
+#editButton {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#portfolioTitle {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+}
+
+#portfolio h2 {
+  text-align: center;
+  margin: 0;
+}
