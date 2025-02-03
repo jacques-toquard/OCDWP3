@@ -1,5 +1,5 @@
-import { ApiService } from './apiService.js';
-import categoryLookup from './categoryService.js';
+import { apiService } from './apiService.js';
+import { categoryLookup } from './categoryService.js';
 
 /**
  * Represents a single work/project item
@@ -46,7 +46,7 @@ class Gallery {
    */
   async loadWorks() {
     try {
-      const works = await ApiService.get('/works');
+      const works = await apiService.get('/works');
       this.works = works.map(
         work =>
           new Work(
@@ -64,4 +64,7 @@ class Gallery {
   }
 }
 
-export { Gallery, Work };
+const galleryService = new Gallery();
+await galleryService.loadWorks();
+
+export { galleryService };

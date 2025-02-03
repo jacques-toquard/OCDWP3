@@ -1,4 +1,4 @@
-import { apiService } from './apiService';
+import { apiService } from './apiService.js';
 
 /**
  * Creates a category lookup service.
@@ -31,4 +31,6 @@ async function createCategoryLookup() {
   };
 }
 
-export { createCategoryLookup };
+const categoryLookup = await createCategoryLookup();
+
+export { categoryLookup };

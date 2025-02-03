@@ -76,4 +76,6 @@ class ApiService {
 /**
  * The singleton instance of the ApiService.
  */
-export const apiService = new ApiService();
+const apiService = new ApiService();
+
+export { apiService };
