@@ -11,7 +11,15 @@ class ApiService {
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         headers: this.headers,
       });
-      return await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      try {
+        const data = await response.json();
+        return data;
+      } catch {
+        return null;
+      }
     } catch (error) {
       this.handleError(error);
     }
@@ -24,7 +32,15 @@ class ApiService {
         headers: this.headers,
         body: JSON.stringify(data),
       });
-      return await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      try {
+        const data = await response.json();
+        return data;
+      } catch {
+        return null;
+      }
     } catch (error) {
       this.handleError(error);
     }
