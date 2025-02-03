@@ -1,13 +1,16 @@
 {
   "source": {
-    "include": ["./"],
-    "exclude": ["node_modules", "docs", "eslint.config.js"],
-    "includePattern": ".+\\.js(doc|x)?$"
+    "include": ["src/scripts"],
+    "includePattern": ".+\\.js(doc|on)?$",
+    "excludePattern": "(node_modules|\\.git)"
   },
   "plugins": ["plugins/markdown"],
   "opts": {
     "destination": "docs",
     "recurse": true,
+    "encoding": "utf8",
+    "quiet": false,
+    "verbose": true,
     "readme": "README.md"
   },
   "templates": {
