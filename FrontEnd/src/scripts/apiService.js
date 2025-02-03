@@ -15,7 +15,7 @@ class ApiService {
   /**
    * Makes a GET request to the API.
    * @param {string} endpoint - The endpoint to request.
-   * @returns {Promise<unknown>} The response data.
+   * @returns {Promise<null|Object>} The response data.
    */
   async get(endpoint) {
     try {
@@ -39,8 +39,8 @@ class ApiService {
   /**
    * Makes a POST request to the API.
    * @param {string} endpoint - The endpoint to request.
-   * @param {unknown} data - The data to send in the request body.
-   * @returns {Promise<unknown>} The response data.
+   * @param {Object} data - The data to send in the request body.
+   * @returns {Promise<null|Object>} The response data.
    */
   async post(endpoint, data) {
     try {
