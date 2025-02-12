@@ -1,12 +1,14 @@
 import { authService } from './authService.js';
 import { categoryLookup } from './categoryService.js';
 import { galleryService } from './galleryService.js';
+import { Modal } from './modal.js';
 
 if (authService.isLoggedIn()) {
   const editBanner = document.getElementById('editBanner');
   editBanner.style.display = 'flex';
   const editButton = document.getElementById('editButton');
   editButton.style.display = 'flex';
+  const modal = new Modal();
 }
 
 const galleryDiv = document.getElementById('gallery');
