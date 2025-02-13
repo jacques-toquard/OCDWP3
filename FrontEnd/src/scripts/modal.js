@@ -3,7 +3,12 @@ import { galleryService } from './galleryService.js';
 
 class Page {
   static instances = [];
-  constructor(pageNumber, pageTitle = 'No Title', middleSection = '', bottomSection = '') {
+  constructor(
+    pageNumber,
+    pageTitle = 'No Title',
+    middleSection = '',
+    bottomSection = ''
+  ) {
     this.htmlElement = document.getElementById(`modalPage-${pageNumber}`);
     this.htmlElement.innerHTML = `<h2>${pageTitle}</h2>
     <div id="middleSection-${pageNumber}" class="middle-section">${middleSection}</div>
@@ -25,10 +30,15 @@ class Page {
   }
 }
 
-const page1 = new Page(1, 'Galerie photo', '<p>future modalGallery</p>', '<button id="modalAddPhoto" class="modal-button">Ajouter une photo</button>');
+const page1 = new Page(
+  1,
+  'Galerie photo',
+  '<p>future modalGallery</p>',
+  '<button id="modalAddPhoto" class="modal-button">Ajouter une photo</button>'
+);
 document.getElementById('modalAddPhoto').addEventListener('click', () => {
   page2.show();
-})
+});
 const page2 = new Page(2, 'Ajout photo');
 
 class Modal {
