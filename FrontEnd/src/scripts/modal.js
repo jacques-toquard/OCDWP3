@@ -3,13 +3,16 @@ import { galleryService } from './galleryService.js';
 
 class Page {
   static instances = [];
-  constructor(pageNumber) {
+  constructor(pageNumber, pageTitle = 'No Title', middleSection = '', bottomSection = '') {
     this.htmlElement = document.getElementById(`modalPage-${pageNumber}`);
+    this.htmlElement.innerHTML = `<h2>${pageTitle}</h2>
+    <div id="middleSection-${pageNumber}" class="middle-section">${middleSection}</div>
+    <div id="bottomSection-${pageNumber}" class="bottom-section">${bottomSection}</div>`;
     Page.instances.push(this);
   }
 
   show() {
-    Page.instances.forEach((page) => {
+    Page.instances.forEach(page => {
       if (page !== this) {
         page.hide();
       }
@@ -22,8 +25,11 @@ class Page {
   }
 }
 
-const page1 = new Page(1);
-const page2 = new Page(2);
+const page1 = new Page(1, 'Galerie photo', '<p>future modalGallery</p>', '<button id="modalAddPhoto" class="modal-button">Ajouter une photo</button>');
+document.getElementById('modalAddPhoto').addEventListener('click', () => {
+  page2.show();
+})
+const page2 = new Page(2, 'Ajout photo');
 
 class Modal {
   constructor() {
@@ -49,6 +55,7 @@ class Modal {
 
   close() {
     this.modalElement.style.display = 'none';
+    page1.show();
   }
 }
 
