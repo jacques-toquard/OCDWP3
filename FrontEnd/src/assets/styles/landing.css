@@ -69,3 +69,40 @@
   background-color: #1d6154;
   color: white;
 }
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#modalClose {
+  position: absolute;
+  top: 1.8rem;
+  right: 2rem;
+  border: none;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#modalWrapper {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  /* padding: 8rem; */
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
