@@ -1,8 +1,25 @@
 import { apiService } from './apiService.js';
 import { galleryService } from './galleryService.js';
 
+/**
+ * Class representing a page in the modal.
+ * @class Page
+ * @static instances - Array of Page instances
+ * @method show - Show the page
+ * @method hide - Hide the page
+ */
 class Page {
   static instances = [];
+  /**
+   * Create a new page object.
+   * @param {number} pageNumber - Number of the page, must match the id of the
+   *   html element that will contain the page content.
+   * @param {string} [pageTitle = 'No Title'] - Title of the page.
+   * @param {string} [middleSection = ''] - Content of the middle section of the
+   *   page.
+   * @param {string} [bottomSection = ''] - Content of the bottom section of the
+   *   page.
+   */
   constructor(
     pageNumber,
     pageTitle = 'No Title',
@@ -41,6 +58,15 @@ document.getElementById('modalAddPhoto').addEventListener('click', () => {
 });
 const page2 = new Page(2, 'Ajout photo');
 
+/**
+ * Class representing a modal.
+ * @class Modal
+ * @property {HTMLElement} editButton - The edit button element.
+ * @property {HTMLElement} modalElement - The modal element.
+ * @property {HTMLElement} modalClose - The close button element.
+ * @method open - Opens the modal.
+ * @method close - Closes the modal.
+ */
 class Modal {
   constructor() {
     this.editButton = document.getElementById('editButton');

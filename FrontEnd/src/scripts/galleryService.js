@@ -4,6 +4,12 @@ import { categoryLookup } from './categoryService.js';
 /**
  * Represents a single work/project item
  * @class Work
+ * @property {number|string} id - Unique identifier for the work
+ * @property {number|string} userId - ID of the user who created the work
+ * @property {string} imageUrl - URL of the work's image
+ * @property {string} title - Title of the work
+ * @property {number|string} categoryId - ID of the work's category
+ * @property {string} category - Name of the work's category
  */
 class Work {
   /**
@@ -27,6 +33,9 @@ class Work {
 /**
  * Manages a collection of works/projects
  * @class Gallery
+ * @property {Work[]} works - Array of Work instances
+ * @method loadWorks - Loads works from the API and converts them to Work instances
+ * @method getWorksByCategory - Returns an array of works that belong to the specified category
  */
 class Gallery {
   /**
