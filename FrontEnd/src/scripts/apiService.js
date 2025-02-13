@@ -1,3 +1,5 @@
+import { authService } from './authService.js';
+
 /**
  * Service for interacting with the API.
  */
@@ -10,6 +12,9 @@ class ApiService {
     this.headers = {
       'Content-Type': 'application/json',
     };
+    if (authService.getToken()) {
+      this.headers.Authorization = `Bearer ${authService.getToken()}`;
+    }
   }
 
   /**
@@ -48,6 +53,26 @@ class ApiService {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      try {
+        const data = await response.json();
+        return data;
+      } catch {
+        return null;
+      }
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  async delete(endpoint) {
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: 'DELETE',
+        headers: this.headers,
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

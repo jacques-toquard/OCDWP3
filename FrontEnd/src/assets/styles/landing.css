@@ -100,7 +100,7 @@
   padding: 3rem;
   /* padding: 8rem; */
   width: 90%;
-  max-width: 800px;
+  max-width: 600px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -158,4 +158,33 @@
 
 .modal-button:hover {
   background-color: #0e2f28;
+}
+
+#modalGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+#modalGallery figure {
+  margin: 1rem auto;
+}
+
+#modalGallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.delete-work {
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.delete-work:hover {
+  background-color: #333;
 }
