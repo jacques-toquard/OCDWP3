@@ -1,5 +1,29 @@
-import { authService } from './authService.js';
 import { apiService } from './apiService.js';
+import { galleryService } from './galleryService.js';
+
+class Page {
+  static instances = [];
+  constructor(pageNumber) {
+    this.htmlElement = document.getElementById(`modalPage-${pageNumber}`);
+    Page.instances.push(this);
+  }
+
+  show() {
+    Page.instances.forEach((page) => {
+      if (page !== this) {
+        page.hide();
+      }
+    });
+    this.htmlElement.style.display = 'flex';
+  }
+
+  hide() {
+    this.htmlElement.style.display = 'none';
+  }
+}
+
+const page1 = new Page(1);
+const page2 = new Page(2);
 
 class Modal {
   constructor() {

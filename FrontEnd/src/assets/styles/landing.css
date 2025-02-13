@@ -104,5 +104,18 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  /* gap: 2rem; */
+}
+
+.page {
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#modalPage-1 {
+  display: flex;
+}
+
+#modalPage-2 {
+  display: none;
 }
