@@ -24,9 +24,13 @@ function createModalFigure(imageSource, id) {
   return figure;
 }
 
+var modalGallery = null;
+
 function renderModalGallery(modalFigurelist) {
-  const modalGallery = document.createElement('div');
-  modalGallery.id = 'modalGallery';
+  if (!modalGallery) {
+    modalGallery = document.createElement('div');
+    modalGallery.id = 'modalGallery';
+  }
   modalGallery.innerHTML = '';
   modalFigurelist.forEach(figure => {
     modalGallery.appendChild(figure);
@@ -36,7 +40,8 @@ function renderModalGallery(modalFigurelist) {
       event.stopPropagation();
       if (confirm('Are you sure you want to delete this work?')) {
         const workId = figure.dataset.workId;
-        await apiService.delete(`/works/${workId}`); // todo: trigger rerender
+        await apiService.delete(`/works/${workId}`);
+        await page1.refreshModalGallery();
       }
     });
   });
@@ -112,6 +117,19 @@ const page1 = new Page(
 document.getElementById('modalAddPhoto').addEventListener('click', () => {
   page2.show();
 });
+page1.refreshModalGallery = async () => {
+  await galleryService.loadWorks();
+  let modalGallery = renderModalGallery(
+    galleryService.works.map(work => createModalFigure(work.imageUrl, work.id))
+  );
+  let existingModalGallery = page1.htmlElement.querySelector('#modalGallery');
+  if (existingModalGallery) {
+    existingModalGallery.replaceWith(modalGallery);
+  } else {
+    page1.htmlElement.appendChild(modalGallery);
+  }
+};
+
 const page2 = new Page(2, 'Ajout photo');
 
 /**
