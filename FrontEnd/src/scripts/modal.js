@@ -117,6 +117,16 @@ const page1 = new Page(
 document.getElementById('modalAddPhoto').addEventListener('click', () => {
   page2.show();
 });
+
+const galleryRefreshCallback = {
+  subscribers: [],
+
+  callback: () => {
+    console.log(galleryRefreshCallback.subscribers);
+    galleryRefreshCallback.subscribers.forEach(callback => callback());
+  },
+};
+
 page1.refreshModalGallery = async () => {
   await galleryService.loadWorks();
   let modalGallery = renderModalGallery(
@@ -128,6 +138,7 @@ page1.refreshModalGallery = async () => {
   } else {
     page1.htmlElement.appendChild(modalGallery);
   }
+  galleryRefreshCallback.callback();
 };
 
 const page2 = new Page(2, 'Ajout photo');
@@ -169,4 +180,4 @@ class Modal {
   }
 }
 
-export { Modal };
+export { Modal, galleryRefreshCallback };

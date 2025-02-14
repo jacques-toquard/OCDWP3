@@ -1,7 +1,7 @@
 import { authService } from './authService.js';
 import { categoryLookup } from './categoryService.js';
 import { galleryService } from './galleryService.js';
-import { Modal } from './modal.js';
+import { Modal, galleryRefreshCallback } from './modal.js';
 
 if (authService.isLoggedIn()) {
   const editBanner = document.getElementById('editBanner');
@@ -32,6 +32,8 @@ function renderGallery() {
     galleryDiv.appendChild(figure);
   });
 }
+
+galleryRefreshCallback.subscribers.push(renderGallery);
 
 const categories = [
   { id: 'all', name: 'Tous' },
