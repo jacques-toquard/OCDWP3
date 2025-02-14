@@ -71,11 +71,12 @@ class Page {
     pageNumber,
     pageTitle = 'No Title',
     middleSectionDivElement = null,
+    middleSection = '',
     bottomSection = ''
   ) {
     this.htmlElement = document.getElementById(`modalPage-${pageNumber}`);
     this.htmlElement.innerHTML = `<h2>${pageTitle}</h2>
-    <div id="middleSection-${pageNumber}" class="middle-section"></div>
+    <div id="middleSection-${pageNumber}" class="middle-section">${middleSection}</div>
     <div id="bottomSection-${pageNumber}" class="bottom-section">${bottomSection}</div>`;
     if (middleSectionDivElement) {
       this.htmlElement
@@ -112,6 +113,7 @@ const page1 = new Page(
   renderModalGallery(
     galleryService.works.map(work => createModalFigure(work.imageUrl, work.id))
   ),
+  '',
   '<button id="modalAddPhoto" class="modal-button">Ajouter une photo</button>'
 );
 document.getElementById('modalAddPhoto').addEventListener('click', () => {
@@ -141,7 +143,29 @@ page1.refreshModalGallery = async () => {
   galleryRefreshCallback.callback();
 };
 
-const page2 = new Page(2, 'Ajout photo');
+const page2 = new Page(
+  2,
+  'Ajout photo',
+  null,
+  `
+    <button id="returnPage1">
+      <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.439478 8.94458C-0.146493 9.53055 -0.146493 10.4822 0.439478 11.0681L7.9399 18.5686C8.52587 19.1545 9.47748 19.1545 10.0635 18.5686C10.6494 17.9826 10.6494 17.031 10.0635 16.445L5.11786 11.5041H19.4999C20.3297 11.5041 21 10.8338 21 10.004C21 9.17428 20.3297 8.50393 19.4999 8.50393H5.12255L10.0588 3.56303C10.6447 2.97706 10.6447 2.02545 10.0588 1.43948C9.47279 0.853507 8.52118 0.853507 7.93521 1.43948L0.43479 8.9399L0.439478 8.94458Z" fill="black"/>
+      </svg>
+    </button>
+    <form id="modalForm">
+      <input type="file" id="photo-input" name="photo">
+      <input type="text" id="title-input" name="title" placeholder="Title">
+    </form>
+  `,
+  `
+    <button type="submit">Send</button>
+  `
+);
+
+page2.htmlElement.querySelector('#returnPage1').addEventListener('click', () => {
+  page1.show();
+});
 
 /**
  * Class representing a modal.

@@ -188,3 +188,12 @@
 .delete-work:hover {
   background-color: #333;
 }
+
+#returnPage1 {
+  border: none;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  cursor: pointer;
+  background-color: transparent;
+}
