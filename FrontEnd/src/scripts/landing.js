@@ -17,7 +17,6 @@ let galleryActiveFilter = 'all';
 function renderGallery() {
   galleryDiv.innerHTML = '';
   const works = galleryService.getWorksByCategory(galleryActiveFilter);
-  // ! console.log(works);
   works.forEach(work => {
     const figure = document.createElement('figure');
     const image = document.createElement('img');
@@ -52,7 +51,6 @@ function handleCategoryFilter(categoryId) {
 
 const filtersDiv = document.getElementById('filters');
 
-console.log(categories);
 categories.forEach(category => {
   const filterButton = document.createElement('button');
   filterButton.textContent = category.name ?? 'Sans catégorie';

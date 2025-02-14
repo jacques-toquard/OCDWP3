@@ -78,8 +78,6 @@ class Gallery {
    * @returns {Work[]} An array of works that belong to the specified category.
    */
   getWorksByCategory(categoryId) {
-    // console.log(typeof categoryId); // * string
-    console.log(`Filtering works for categoryId: ${categoryId}`);
     return this.works.filter(
       work => categoryId === 'all' || work.categoryId == categoryId // * 1 == "1"
     );
