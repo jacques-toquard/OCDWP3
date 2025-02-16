@@ -1,5 +1,6 @@
 import { apiService } from './apiService.js';
 import { galleryService } from './galleryService.js';
+import { categoryLookup } from './categoryService.js';
 
 function createModalFigure(imageSource, id) {
   const figure = document.createElement('figure');
@@ -169,7 +170,6 @@ const page2 = new Page(
           </svg>
           <input type="file" id="modalAddWorkAddPhoto" name="photo" style="display: none;">
           <label for="modalAddWorkAddPhoto" id="modalAddWorkAddPhotoLabel">+ Ajouter photo</label>
-
           <div id="modalAddWorkImageConstraints">jpg, png: 4mo max</div>
         </div>
         <div id="modalAddWorkPreview"></div>
@@ -181,12 +181,11 @@ const page2 = new Page(
     <div class="modal-add-work-inputs">
       <label for="category">Catégorie</label>
       <select id="category">
-      <option value="all">Tous</option>
       </select>
     </form>
   `,
   `
-    <button id="modalAddWorkSubmit" type="submit">Send</button>
+    <button id="modalAddWorkSubmit" type="submit" class="modal-button modal-button-disabled">Send</button>
   `
 );
 
@@ -195,6 +194,96 @@ page2.htmlElement
   .addEventListener('click', () => {
     page1.show();
   });
+
+const form = document.getElementById('modalAddWorkForm');
+const formSubmit = document.getElementById('modalAddWorkSubmit');
+const formTitle = document.getElementById('title');
+const modalAddWorkAddPhoto = document.getElementById('modalAddWorkAddPhoto');
+const previewImage = document.getElementById('modalAddWorkPreview');
+const modalAddWorkWrapper = document.getElementById('modalAddWorkImageWrapper');
+
+formSubmit.addEventListener('click', async () => {
+  if (formSubmit.classList.contains('modal-button-disabled')) {
+    return;
+  }
+  await formSub();
+  // form.submit(); // !
+});
+
+form.addEventListener('input', () => {
+  // ! never checked
+  if (form.checkValidity()) {
+    // ! always true somehow
+    formSubmit.classList.add('modal-button-disabled');
+  } else {
+    formSubmit.classList.remove('modal-button-disabled');
+  }
+});
+
+document.getElementById('category').innerHTML = categoryLookup
+  .getAllCategories()
+  .map(category => `<option value="${category.id}">${category.name}</option>`)
+  .join('');
+
+page2.hide = () => {
+  page2.htmlElement.style.display = 'none';
+  formTitle.value = '';
+  modalAddWorkAddPhoto.value = ''; // * probably works
+  modalAddWorkWrapper.style.display = 'flex';
+  previewImage.innerHTML = '';
+  previewImage.style.display = 'none';
+  formSubmit.classList.add('modal-button-disabled');
+};
+
+const acceptedFileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+const maxSize = 4 * 1024 * 1024; // 4MB
+
+const reader = new FileReader();
+
+modalAddWorkAddPhoto.accept = acceptedFileTypes.join(', ');
+modalAddWorkAddPhoto.addEventListener('change', () => {
+  const file = modalAddWorkAddPhoto.files[0];
+  if (!acceptedFileTypes.includes(file.type) || file.size > maxSize) {
+    alert('Format de fichier non pris en charge ou taille trop grande');
+    modalAddWorkAddPhoto.value = '';
+  }
+  // const reader = new FileReader();
+  reader.onload = () => {
+    modalAddWorkWrapper.style.display = 'none';
+    previewImage.style.display = 'flex';
+    previewImage.innerHTML = `<img src="${reader.result}" alt="Preview">`;
+    formSubmit.classList.remove('modal-button-disabled');
+  };
+  reader.readAsDataURL(file);
+});
+
+// form.onsubmit = async event => { // ! still causes page reload somehow
+//   event.preventDefault();
+//   const formData = new FormData();
+//   formData.append('title', formTitle.value);
+//   formData.append('category', document.getElementById('category').value);
+//   formData.append('image', modalAddWorkAddPhoto.files[0]);
+//   await apiService.post('/works', formData);
+//   page1.refreshModalGallery();
+//   // page1.show();
+//   // page2.hide();
+// }
+
+async function formSub() {
+  // const formData = new FormData();
+  const formData = {};
+  // formData.append('title', formTitle.value);
+  // formData.append('category', document.getElementById('category').value);
+  // formData.append('image', modalAddWorkAddPhoto.files[0]);
+  formData.title = formTitle.value;
+  formData.category = reader.result;
+  formData.image = modalAddWorkAddPhoto.files[0];
+  console.log(formData);
+  await apiService.post('/works', formData);
+  page1.refreshModalGallery();
+  // page1.show();
+  // page2.hide();
+}
 
 /**
  * Class representing a modal.

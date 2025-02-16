@@ -8,6 +8,7 @@ if (authService.isLoggedIn()) {
   editBanner.style.display = 'flex';
   const editButton = document.getElementById('editButton');
   editButton.style.display = 'flex';
+  // eslint-disable-next-line no-unused-vars
   const modal = new Modal();
 }
 
@@ -29,6 +30,8 @@ function renderGallery() {
     figure.appendChild(image);
     figure.appendChild(figCaption);
     galleryDiv.appendChild(figure);
+
+    figure.classList.add('work');
   });
 }
 
