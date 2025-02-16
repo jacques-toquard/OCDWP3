@@ -1,5 +1,5 @@
 import { apiService } from './apiService.js';
-import { galleryService } from './galleryService.js';
+import { galleryService, Work } from './galleryService.js';
 import { categoryLookup } from './categoryService.js';
 
 function createModalFigure(imageSource, id) {
@@ -131,7 +131,6 @@ const galleryRefreshCallback = {
 };
 
 page1.refreshModalGallery = async () => {
-  await galleryService.loadWorks();
   let modalGallery = renderModalGallery(
     galleryService.works.map(work => createModalFigure(work.imageUrl, work.id))
   );
@@ -185,7 +184,7 @@ const page2 = new Page(
     </form>
   `,
   `
-    <button id="modalAddWorkSubmit" type="submit" class="modal-button modal-button-disabled">Send</button>
+    <button id="modalAddWorkSubmit" type="submit" class="modal-button modal-button-disabled">Valider</button>
   `
 );
 
@@ -208,13 +207,10 @@ formSubmit.addEventListener('click', async () => {
     return;
   }
   await formSub();
-  // form.submit(); // !
 });
 
 form.addEventListener('input', () => {
-  // ! never checked
   if (form.checkValidity()) {
-    // ! always true somehow
     formSubmit.classList.add('modal-button-disabled');
   } else {
     formSubmit.classList.remove('modal-button-disabled');
@@ -229,7 +225,7 @@ document.getElementById('category').innerHTML = categoryLookup
 page2.hide = () => {
   page2.htmlElement.style.display = 'none';
   formTitle.value = '';
-  modalAddWorkAddPhoto.value = ''; // * probably works
+  modalAddWorkAddPhoto.value = '';
   modalAddWorkWrapper.style.display = 'flex';
   previewImage.innerHTML = '';
   previewImage.style.display = 'none';
@@ -257,34 +253,6 @@ modalAddWorkAddPhoto.addEventListener('change', () => {
   reader.readAsDataURL(file);
 });
 
-// form.onsubmit = async event => { // ! still causes page reload somehow
-//   event.preventDefault();
-//   const formData = new FormData();
-//   formData.append('title', formTitle.value);
-//   formData.append('category', document.getElementById('category').value);
-//   formData.append('image', modalAddWorkAddPhoto.files[0]);
-//   await apiService.post('/works', formData);
-//   page1.refreshModalGallery();
-//   // page1.show();
-//   // page2.hide();
-// }
-
-// async function formSub() {
-//   // const formData = new FormData();
-//   const formData = {};
-//   // formData.append('title', formTitle.value);
-//   // formData.append('category', formCategory.value);
-//   // formData.append('image', modalAddWorkAddPhoto.files[0]);
-//   formData.title = formTitle.value;
-//   formData.category = reader.result;
-//   formData.image = modalAddWorkAddPhoto.files[0];
-//   console.log(formData);
-//   await apiService.post('/works', formData);
-//   page1.refreshModalGallery();
-//   // page1.show();
-//   // page2.hide();
-// }
-
 async function formSub() {
   const formData = new FormData();
   formData.append('title', formTitle.value);
@@ -295,11 +263,20 @@ async function formSub() {
 
   try {
     const response = await apiService.postFormData('/works', formData);
-    console.log(response);
+    const newWork = new Work(
+      response.id,
+      response.userId,
+      response.imageUrl,
+      response.title,
+      response.categoryId
+    );
+    galleryService.addWork(newWork);
     page1.refreshModalGallery();
   } catch (error) {
     console.error(error);
   }
+
+  page1.show();
 }
 
 /**

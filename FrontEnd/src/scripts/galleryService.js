@@ -82,9 +82,13 @@ class Gallery {
       work => categoryId === 'all' || work.categoryId == categoryId // * 1 == "1"
     );
   }
+
+  addWork(work) {
+    this.works.push(work);
+  }
 }
 
 const galleryService = new Gallery();
 await galleryService.loadWorks();
 
-export { galleryService };
+export { galleryService, Work };
