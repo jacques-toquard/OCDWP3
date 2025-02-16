@@ -198,6 +198,7 @@ page2.htmlElement
 const form = document.getElementById('modalAddWorkForm');
 const formSubmit = document.getElementById('modalAddWorkSubmit');
 const formTitle = document.getElementById('title');
+const formCategory = document.getElementById('category');
 const modalAddWorkAddPhoto = document.getElementById('modalAddWorkAddPhoto');
 const previewImage = document.getElementById('modalAddWorkPreview');
 const modalAddWorkWrapper = document.getElementById('modalAddWorkImageWrapper');
@@ -247,7 +248,6 @@ modalAddWorkAddPhoto.addEventListener('change', () => {
     alert('Format de fichier non pris en charge ou taille trop grande');
     modalAddWorkAddPhoto.value = '';
   }
-  // const reader = new FileReader();
   reader.onload = () => {
     modalAddWorkWrapper.style.display = 'none';
     previewImage.style.display = 'flex';
@@ -269,20 +269,37 @@ modalAddWorkAddPhoto.addEventListener('change', () => {
 //   // page2.hide();
 // }
 
+// async function formSub() {
+//   // const formData = new FormData();
+//   const formData = {};
+//   // formData.append('title', formTitle.value);
+//   // formData.append('category', formCategory.value);
+//   // formData.append('image', modalAddWorkAddPhoto.files[0]);
+//   formData.title = formTitle.value;
+//   formData.category = reader.result;
+//   formData.image = modalAddWorkAddPhoto.files[0];
+//   console.log(formData);
+//   await apiService.post('/works', formData);
+//   page1.refreshModalGallery();
+//   // page1.show();
+//   // page2.hide();
+// }
+
 async function formSub() {
-  // const formData = new FormData();
-  const formData = {};
-  // formData.append('title', formTitle.value);
-  // formData.append('category', document.getElementById('category').value);
-  // formData.append('image', modalAddWorkAddPhoto.files[0]);
-  formData.title = formTitle.value;
-  formData.category = reader.result;
-  formData.image = modalAddWorkAddPhoto.files[0];
+  const formData = new FormData();
+  formData.append('title', formTitle.value);
+  formData.append('category', formCategory.value);
+  formData.append('image', modalAddWorkAddPhoto.files[0]);
+
   console.log(formData);
-  await apiService.post('/works', formData);
-  page1.refreshModalGallery();
-  // page1.show();
-  // page2.hide();
+
+  try {
+    const response = await apiService.postFormData('/works', formData);
+    console.log(response);
+    page1.refreshModalGallery();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 /**
