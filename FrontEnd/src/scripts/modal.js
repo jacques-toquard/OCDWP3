@@ -41,7 +41,12 @@ function renderModalGallery(modalFigurelist) {
       event.stopPropagation();
       if (confirm('Are you sure you want to delete this work?')) {
         const workId = figure.dataset.workId;
-        await apiService.delete(`/works/${workId}`);
+        try {
+          await apiService.delete(`/works/${workId}`);
+        } catch (error) {
+          console.error(error);
+        }
+        galleryService.deleteWork(workId);
         await page1.refreshModalGallery();
       }
     });

@@ -88,7 +88,7 @@ class Gallery {
   }
 
   deleteWork(workId) {
-    this.works = this.works.filter(work => work.id !== workId);
+    this.works = this.works.filter(work => work.id !== +workId);
   }
 }
 
