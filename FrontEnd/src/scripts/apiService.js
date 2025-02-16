@@ -68,6 +68,38 @@ class ApiService {
     }
   }
 
+  /**
+   * Makes a POST request to the API with a multipart/form-data body.
+   * @param {string} endpoint - The endpoint to request.
+   * @param {FormData} formData - The form data to send in the request body.
+   * @returns {Promise<null|Object>} The response data.
+   */
+  async postFormData(endpoint, formData) {
+    try {
+      const headers = { ...this.headers };
+      delete headers['Content-Type'];
+
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: 'POST',
+        headers,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      try {
+        const data = await response.json();
+        return data;
+      } catch {
+        return null;
+      }
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   async delete(endpoint) {
     try {
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
