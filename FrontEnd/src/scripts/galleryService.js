@@ -86,6 +86,10 @@ class Gallery {
   addWork(work) {
     this.works.push(work);
   }
+
+  deleteWork(workId) {
+    this.works = this.works.filter(work => work.id !== workId);
+  }
 }
 
 const galleryService = new Gallery();
